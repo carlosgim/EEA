@@ -32,8 +32,8 @@ grid.arrange(g1,g2)
 
 #b. Hallar la recta de mínimos cuadrados para cada caso.
 
-fit.1 <- lm(data = salarios_v2,salario~salini)
-fit.2 <- lm(data = salarios_v2,salario~expprev)
+fit.1 <- lm(data = salarios_v2,salini~salario)
+fit.2 <- lm(data = salarios_v2,expprev~salario)
 
 summary(fit.1)
 summary(fit.2)
@@ -51,7 +51,7 @@ g2+theme_bw() +
 
 summary(fit.1)
 
-'Residual standard error: 44.03 on 472 degrees of freedom
+'Residual standard error: 16.86 on 472 degrees of freedom
 Multiple R-squared:  0.3739,	Adjusted R-squared:  0.3726 '
 
 par(mfrow = c(2, 2))  # Split the plotting panel into a 2 x 2 grid
@@ -65,5 +65,5 @@ ggplot(salarios_v2, aes(x = salario, y = salini)) +
   geom_smooth(method = "lm", se = FALSE, color = "lightgrey") +  # Plot regression slope
   geom_segment(aes(xend = salario, yend = predicted_mod_1), alpha = .2) +  # alpha to fade lines
   geom_point() +
-  geom_point(aes(y = predicted_mod_1), shape = 1) +
+ # geom_point(aes(y = predicted_mod_1), shape = 1) +
   theme_bw()  # Add theme for cleaner look
