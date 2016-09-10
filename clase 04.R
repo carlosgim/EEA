@@ -71,3 +71,8 @@ sqrt(vif.autos$VIF) > 2 # problem?
 vifstep(autos[,c(3,4,5,8)],th=8)
 
 vifcor(autos[,c(3,4,5,8)],th=0.9)
+
+
+# Stepwise Regression
+step <- stepAIC(autos.fit.2, direction="both")
+step$anova # display results 
