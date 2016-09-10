@@ -76,3 +76,16 @@ vifcor(autos[,c(3,4,5,8)],th=0.9)
 # Stepwise Regression
 step <- stepAIC(autos.fit.2, direction="both")
 step$anova # display results 
+
+
+# All Subsets Regression
+library(leaps)
+leaps<-regsubsets(consumo~peso+cilindr+acel+cv,data=autos,nbest=10)
+# view results
+summary(leaps)
+# plot a table of models showing variables in each model.
+# models are ordered by the selection statistic.
+plot(leaps,scale="r2")
+# plot statistic by subset size
+library(car)
+subsets(leaps, statistic="rsq") 
