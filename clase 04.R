@@ -56,6 +56,7 @@ plot(autos.fit.1)
 
 summary(autos.fit.1)
 
+
 #fit2: potencia si esta correlacionada con las otras
 
 autos.fit.2 <- lm(data=autos, consumo~peso+cilindr+acel+cv)
