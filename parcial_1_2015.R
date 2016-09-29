@@ -9,7 +9,7 @@ library(usdm) #evaluar vif
 library(CombMSC)
 library(ggplot2)
 library(caret)
-
+library(car)
 options(scipen = 9999)
 
 -----#carga de datos------
@@ -90,13 +90,26 @@ varImp(forw.pva.1)
 vif.forward <- vif( PVA97[,c(2:11,14:16)]) # variance inflation factors
 vif.forward
 
-vifstep(PVA97[,c(2:11,14:16)],th=9)
+vifstep(PVA97[,c(3:11,14:16)],th=9)
 
-vifcor(PVA97[,c(2:11,14:16)],th=0.9)
+vifcor(PVA97[,c(3:11,14:16)],th=0.9)
 
 #evaluar los vif mayores a 9 o 10
 forw.pva.1$qr
 
-corrplot((cor(PVA97[,c(2:11,14:16)])),co)
+corrplot((cor(PVA97[,c(3:11,14:16)])),method = "square",addCoef.col = TRUE)
+
+autov.forw <- FactoMineR::PCA(PVA97[,c(3:11,14:16)])
+
+autov.forw$var$cor
+max(autov.forw$eig$eigenvalue)/min(autov.forw$eig$eigenvalue)
 
 
+#1.j.	Utilice un método gráfico para analizar el cumplimiento del supuesto de homocedasticidad. 
+
+# Evaluate homoscedasticity
+# non-constant error variance test
+ncvTest(forw.pva.1)
+# plot studentized residuals vs. fitted values
+spreadLevelPlot(forw.pva.1)
+plot(forw.pva.1) #ver 3er grafico
