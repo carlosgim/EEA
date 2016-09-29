@@ -10,6 +10,7 @@ library(CombMSC)
 library(ggplot2)
 library(caret)
 library(car)
+library(ellipse)
 options(scipen = 9999)
 
 -----#carga de datos------
@@ -32,9 +33,9 @@ confint(fit.pva.1) #valores de confianza
 con lo que la regresión no ajusta bien a la realidad.'
 plot(PVA97$DemAge,PVA97$TARGET_D)
 abline(fit.pva.1,col="red")
-
+ellipse(PVA97$DemAge,PVA97$TARGET_D)
 predict(fit.pva.1,data.frame(DemAge=98),se.fit = TRUE)
-
+g1 <- ggplot(PVA97,mapping = aes(x=DemAge,y=TARGET_D))+geom_point()+geom_smooth(method = "lm")+stat_ellipse()
 'valor predicho 14.10365'
 
 #1.c. Diseñe un gráfico que incluya la recta y el intervalo de confianza del 95% para la media (con línea punteada o similar). 
