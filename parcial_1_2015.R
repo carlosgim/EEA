@@ -8,6 +8,8 @@ library(MASS)
 library(usdm) #evaluar vif
 library(CombMSC)
 library(ggplot2)
+library(caret)
+
 options(scipen = 9999)
 
 -----#carga de datos------
@@ -52,3 +54,49 @@ predict(fit.pva.1,data.frame(DemAge=69),interval="confidence")
 
 '   fit      lwr      upr
 1 15.33056 14.88495 15.77618'
+
+
+----#punto 2----
+
+#A continuación desarrolle un modelo de regresión que relacione la variable de respuesta con las 12 variables predictoras continuas. Para esto utilice la técnica forward de selección de variables. 
+min.model = lm(TARGET_D ~ 1,data = PVA97[,c(2:11,14:16)])
+fit.pva.2 <- lm(TARGET_D ~ .,data = PVA97[,c(2:11,14:16)])
+
+# Stepwise foward Regression
+forw.pva.1 <-stepAIC(min.model, direction="forward", scope=list(lower=min.model, upper=fit.pva.2))
+
+summary(forw.pva.1)
+forw.pva.1$anova # display results 
+anova(forw.pva.1)
+#intervalos de confianza
+confint(forw.pva.1)
+
+#variables mas importantes
+
+varImp(forw.pva.1)
+
+#1.f.	¿El modelo es significativo? Si es significativo
+#1.g.	¿Qué variables son significativas con un 5% de error? ¿Y con un 1% de error?
+
+anova(forw.pva.1)
+
+'con 1% son todas significativas, con 5% no es sign gifttimelast'
+
+#1.h.	¿Cómo compara el impacto de las variables independientes en el modelo? ¿Cuál es la variable 'más importante' en el modelo? ¿Y la 'menos importante'?
+varImp(forw.pva.1)
+
+#1.i.	¿Existe multicolinealidad en el modelo? Indique al menos 2 opciones para detectarla y explique los resultados obtenidos. 
+
+vif.forward <- vif( PVA97[,c(2:11,14:16)]) # variance inflation factors
+vif.forward
+
+vifstep(PVA97[,c(2:11,14:16)],th=9)
+
+vifcor(PVA97[,c(2:11,14:16)],th=0.9)
+
+#evaluar los vif mayores a 9 o 10
+forw.pva.1$qr
+
+corrplot((cor(PVA97[,c(2:11,14:16)])),co)
+
+
