@@ -52,3 +52,6 @@ predict(fit.f1.1,data.frame(KW=300),interval="confidence")
 plot(fit.f1.1,which=3)
 
 #d.	¿Encuentra valores anómalos importantes mediante la distancia de Cook? ¿Y utilizando DFBetas?
+par(mfrow=c(1,2))
+plot(fit.f1.1,which=4)
+plot(fit.f1.1,which=5)
