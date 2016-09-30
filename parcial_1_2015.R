@@ -11,6 +11,8 @@ library(ggplot2)
 library(caret)
 library(car)
 library(ellipse)
+library(QuantPsyc)
+library(leaps)
 options(scipen = 9999)
 
 -----#carga de datos------
@@ -80,7 +82,8 @@ varImp(forw.pva.1)
 #1.g.	¿Qué variables son significativas con un 5% de error? ¿Y con un 1% de error?
 
 anova(forw.pva.1)
-
+lm.beta(forw.pva.1) #betas estandarizados
+confint(forw.pva.1, level = 0.9 )
 'con 1% son todas significativas, con 5% no es sign gifttimelast'
 
 #1.h.	¿Cómo compara el impacto de las variables independientes en el modelo? ¿Cuál es la variable 'más importante' en el modelo? ¿Y la 'menos importante'?
@@ -114,3 +117,41 @@ ncvTest(forw.pva.1)
 # plot studentized residuals vs. fitted values
 spreadLevelPlot(forw.pva.1)
 plot(forw.pva.1) #ver 3er grafico
+
+#1.k.	Incluya ahora una regresión stepwise para comparar la calidad del ajuste de los 3 modelos obtenidos (la regresión lineal simple más los 2 modelos de selección de variables
+
+step.pva.1 <-stepAIC(fit.pva.2)
+
+summary(step.pva.1)
+AIC(step.pva.1)
+summary(fit.pva.1)
+AIC(fit.pva.1)
+summary(forw.pva.1)
+AIC(forw.pva.1)
+anova(fit.pva.1,forw.pva.1,step.pva.1)
+
+#1.l.	¿Cuál sería el mejor modelo considerando 3 variables predictoras? ¿Y considerando 4 variables predictoras? Indique qué criterio utiliza para esta elección.
+step.pva.1 <-stepAIC(fit.pva.2,scope = list())
+
+# All Subsets Regression
+
+leaps<-regsubsets(TARGET_D ~ .,data = PVA97[,c(2:11,14:16)],nbest=1,nvmax = 3)
+# view results
+summary(leaps)
+# plot a table of models showing variables in each model.
+# models are ordered by the selection statistic.
+plot(leaps,scale="r2")
+# plot statistic by subset size
+subsets(leaps, statistic="rsq") 
+
+leaps<-regsubsets(TARGET_D ~ .,data = PVA97[,c(2:11,14:16)],nvmax = 4)
+# view results
+summary(leaps)
+# models are ordered by the selection statistic.
+plot(leaps,scale="r2")
+
+#1.m.	Desarrolle entonces un nuevo modelo de regresión stepwise que incluya obligatoriamente la variable correspondiente a la edad. Compare el resultado obtenido con la regresión stepwise realizada anteriormente.
+min.model.2 = lm(TARGET_D ~ DemAge,data = PVA97[,c(2:11,14:16)])
+
+step.pva.2 <-stepAIC(fit.pva.2, direction="both", scope=list(lower=min.model.2, upper=fit.pva.2))
+
