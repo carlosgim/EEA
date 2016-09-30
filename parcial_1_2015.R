@@ -140,7 +140,7 @@ leaps<-regsubsets(TARGET_D ~ .,data = PVA97[,c(2:11,14:16)],nbest=1,nvmax = 3)
 summary(leaps)
 # plot a table of models showing variables in each model.
 # models are ordered by the selection statistic.
-plot(leaps,scale="r2")
+plot(leaps,scale="adjr2")
 # plot statistic by subset size
 subsets(leaps, statistic="rsq") 
 
