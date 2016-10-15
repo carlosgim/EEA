@@ -147,6 +147,7 @@ summary(leaps.f1.2)
 # plot a table of models showing variables in each model.
 # models are ordered by the selection statistic.
 plot(leaps.f1.2,scale="adjr2")
+plot(leaps.f1.2,scale="Cp")
 
 #con 3 variables
 leaps.f1.3 <-regsubsets(KMPORH ~ .,data = Formula1[,1:5],nvmax = 3)
@@ -155,6 +156,7 @@ leaps.f1.3$call
 summary(leaps.f1.3)
 leaps.f1.3
 plot(leaps.f1.3,scale="adjr2")
+plot(leaps.f1.3,scale="Cp")
 
 coef(leaps.f1.3,1:3)
 
