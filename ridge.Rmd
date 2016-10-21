@@ -1,0 +1,64 @@
+---
+title: "Ridge"
+author: "pmtempone"
+date: "21 de octubre de 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+if(!require("ISLR")) install.packages("ISLR")
+
+if(!require("caret")) install.packages("caret")
+
+Hitters_c <- Hitters[complete.cases(Hitters),]
+```
+
+## Importo librerías (ISLR incluye el dataset Hitters)
+
+Utilizamos este dataset correspondiente a la librería ISLR para poder realizar el ejemplo:
+
+```{r Breve inspección del dataset Hitters}
+head(Hitters_c)
+
+str(Hitters_c)
+
+```
+
+## Defino la estructura del experimento
+
+
+```{r pressure, echo=TRUE}
+fitControl <- trainControl(method = "repeatedcv",
+                           
+                           number = 5, repeats = 3)
+```
+
+## Valores que pruebo de lambda
+```{r Lambda}
+gridLambda <- expand.grid(lambda = c(0.0001,0.001,0.01,0.1,1,10,
+                                     
+                                     100,1000))
+```
+
+## Corro el experimento
+
+```{r experimento}
+ridgeFit <- train(Salary ~ ., data = Hitters_c, method = "ridge",
+                  
+                  trControl = fitControl,
+                  
+                  tuneGrid = gridLambda,
+                  
+                  preProcess = c("center", "scale"))
+```
+
+## Imprimo el experimento
+
+```{r impresion}
+print(ridgeFit)
+
+plot(ridgeFit)
+```
+
+
