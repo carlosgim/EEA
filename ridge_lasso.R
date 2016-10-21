@@ -10,6 +10,8 @@ head(Hitters)
 
 str(Hitters)
 
+Hitters_c <- Hitters[complete.cases(Hitters),]
+
 # Defino la estructura del experimento
 
 fitControl <- trainControl(method = "repeatedcv",
@@ -24,7 +26,7 @@ gridLambda <- expand.grid(lambda = c(0.0001,0.001,0.01,0.1,1,10,
 
 # Corro el experimento
 
-lassoFit <- train(Salary ~ ., data = Hitters, method = "ridge",
+ridgeFit <- train(Salary ~ ., data = Hitters_c, method = "ridge",
                   
                   trControl = fitControl,
                   
@@ -34,9 +36,9 @@ lassoFit <- train(Salary ~ ., data = Hitters, method = "ridge",
 
 # Imprimo el experimento
 
-print(lassoFit)
+print(ridgeFit)
 
-plot(lassoFit)
+plot(ridgeFit)
 
 
 # Importo librerías (ISLR incluye el dataset Hitters)
@@ -65,7 +67,7 @@ gridLambda <- expand.grid(lambda = c(0.0001,0.001,0.01,0.1,1,10,
 
 # Corro el experimento
 
-lassoFit <- train(Salary ~ .^2, data = Hitters, method = "ridge",
+ridgeFit <- train(Salary ~ .^2, data = Hitters_c, method = "ridge",
                   
                   trControl = fitControl,
                   
@@ -75,6 +77,6 @@ lassoFit <- train(Salary ~ .^2, data = Hitters, method = "ridge",
 
 # Imprimo el experimento
 
-print(lassoFit)
+print(ridgeFit)
 
-plot(lassoFit)
+plot(ridgeFit)
