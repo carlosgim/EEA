@@ -68,3 +68,8 @@ plot(fit.tel.3)
 
 #los residuos tienen q no estar agrupados
 
+
+#valores de rmse
+
+summary(fit.1)$sigma
+
