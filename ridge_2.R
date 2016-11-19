@@ -1,3 +1,5 @@
+#ejemplo de http://analisisydecision.es/regresion-ridge-o-contraida-con-r/
+
 # The following dataset is from Hastie, Tibshirani and Friedman (2009), from a study
 # by Stamey et al. (1989) of prostate cancer, measuring the correlation between the level
 # of a prostate-specific antigen and some covariates. The covariates are
