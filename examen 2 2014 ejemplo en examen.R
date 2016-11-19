@@ -109,9 +109,8 @@ summary(as.factor(pred.testing.sample))
 
 sample_completo <- cbind.data.frame(sick_dataset_testing_sample,pred.testing.sample)
 
+library(dplyr)
 ----#1.1.5----
-
-exp(-6.76911)
 
 
 par(mfrow=c(1,2))
