@@ -79,7 +79,7 @@ lassoFit <- train(Salary ~ .^2, data = Hitters, method = "ridge",
 print(lassoFit)
 
 plot(lassoFit)
-=======
+
 # Importo librerías (ISLR incluye el dataset Hitters)
 
 if(!require("ISLR")) install.packages("ISLR")
@@ -162,4 +162,4 @@ ridgeFit <- train(Salary ~ .^2, data = Hitters_c, method = "ridge",
 print(ridgeFit)
 
 plot(ridgeFit)
->>>>>>> c4f13064cc38d46b4c38d6a7365ca91526d7a764
+
