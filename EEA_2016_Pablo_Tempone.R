@@ -21,6 +21,7 @@ options(scipen = 9999)
 ---#carga de datos-----
 
 autos_parcial <- read.table("C:/Users/Pablo/Google Drive/Maestria/EEA/Examen1-EEA2016/coches_EEA2016.dat",header = TRUE,sep = "!",dec = ",")
+autos_parcial <- read.table("E:/Maestria/EEA/coches_EEA2016.dat",header = TRUE,sep = "!",dec = ",")
 
 
 ----#parte 1------
@@ -129,9 +130,9 @@ summary(leaps.autos.2)
 # models are ordered by the selection statistic.
 par(mfrow=c(1,3))
 
-plot(leaps.f1.2,scale="adjr2")
-plot(leaps.f1.2,scale="Cp")
-plot(leaps.f1.2,scale="r2")
+plot(leaps.autos.2,scale="adjr2")
+plot(leaps.autos.2,scale="Cp")
+plot(leaps.autos.2,scale="r2")
 
 
 summary(leaps.autos.2)
